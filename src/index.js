@@ -82,7 +82,7 @@ app.get('/usuarios', async (req, res) => {
     }
 })
 
-app.put('/patch/:id', async (req, res) => {
+app.patch('/usuarios/:id', async (req, res) => {
     try {
         var { id } = req.params;
         var dataToUpdate = req.body;
