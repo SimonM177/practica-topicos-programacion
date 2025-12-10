@@ -34,16 +34,18 @@ app.listen(port, function () {
 
 app.listen(port, function () {
     connectDB()
-    console.log(`Aqui corriendo en http://localhost${port}!`)
+    console.log(`Api corriendo en http://localhost${port}!`)
 })
 
+// GET: verificar que el servidor esté funcionando correctamente
 app.get('/', (req, res) => {
     console.log('Mi primer endpoint')
     res.status(200).send('Hola, la API esta funcionando correctamente!');
 });
 
+// POST: crear nuevo usuario
 app.post('/', async (req, res) => {
-    try{
+    try {
         var data = req.body
         var newUser = new User(data)
         await newUser.save()
@@ -55,7 +57,7 @@ app.post('/', async (req, res) => {
 
 
         )
-    } catch (err){
+    } catch (err) {
         res.status(400).send({
             success: false,
             message: "Error al intentar crear el usuario, por favor intente nuevamente",
@@ -64,6 +66,7 @@ app.post('/', async (req, res) => {
     }
 })
 
+// GET: obtener todos los usuarios de la base de datos
 app.get('/usuarios', async (req, res) => {
     try{
         var usuarios = await User.find().exec()
@@ -73,7 +76,7 @@ app.get('/usuarios', async (req, res) => {
             outcome: [usuarios]
         })
 
-    }catch(err){
+    } catch(err) {
         res.status(400).send({
             success: false,
             message: "Error al intentar obtener los usuarios",
@@ -82,6 +85,7 @@ app.get('/usuarios', async (req, res) => {
     }
 })
 
+// PATCH: actualizar un usuario dado su ID
 app.patch('/usuarios/:id', async (req, res) => {
     try {
         var { id } = req.params;
